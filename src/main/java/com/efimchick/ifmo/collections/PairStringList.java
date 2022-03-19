@@ -5,41 +5,51 @@ import java.util.Collection;
 import java.util.List;
 
 public class PairStringList extends ArrayList<String> {
-    private List<String> list;
+
+    private static final long serialVersionUID = 1;
 
     PairStringList() {
-        list = new ArrayList<>();
     }
 
     @Override
     public int size() {
-        return list.size();
+        return super.size();
     }
 
 
     @Override
     public boolean add(String s) {
-        list.add(s);
-        list.add(s);
-        return true;
+        super.add(s);
+        return super.add(s);
+    }
+
+    @Override
+    public void add(int index, String element) {
+        int newIndex = getHigherEvenIndex(index);
+        super.add(newIndex, element);
+        super.add(newIndex, element);
+    }
+
+    @Override
+    public String remove(int index) {
+        super.remove(index);
+        return super.remove(getLowerEvenIndex(index));
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        super.remove(o);
+        return super.remove(o);
     }
 
     @Override
     public boolean addAll(Collection<? extends String> c) {
-        super.addAll(c);
-        return super.addAll(c);
+        return super.addAll(duplicateCollection(c));
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends String> c) {
-       list.addAll(index, c);
-       list.addAll(index, c);
-        return false;
+        return super.addAll(getHigherEvenIndex(index), duplicateCollection(c));
     }
 
     @Override
@@ -49,17 +59,30 @@ public class PairStringList extends ArrayList<String> {
 
     @Override
     public String set(int index, String element) {
-        return null;
+        super.set(index, element);
+        return super.set(getAdjacentIndex(index), element);
     }
 
-    @Override
-    public void add(int index, String element) {
-        list.add(index, element);
-        list.add(index, element);
+
+
+    //Perhaps there is a better solution here
+    private List<String> duplicateCollection(Collection<? extends String> c) {
+        List<String> duplicatedList = new ArrayList<>();
+        for (String element: c) {
+            duplicatedList.add(element);
+            duplicatedList.add(element);
+        }
+        return duplicatedList;
     }
 
-    @Override
-    public String remove(int index) {
-        return null;
+    private int getLowerEvenIndex(int index) {
+        return (index ^ 1) - 1;
+    }
+
+    private int getHigherEvenIndex(int index) {
+        return (index ^ 1) + 1;
+    }
+    private int getAdjacentIndex(int index) {
+        return index ^ 1;
     }
 }
