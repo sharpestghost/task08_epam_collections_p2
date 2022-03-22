@@ -47,6 +47,7 @@ class MedianQueue extends ArrayDeque<Integer> {
         return pollElement;
     }
 
+    @Override
     public Integer peek() {
         Integer peekElement;
         if (left.size() < right.size()) {
