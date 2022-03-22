@@ -1,45 +1,59 @@
 package com.efimchick.ifmo.collections;
 
 import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Queue;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
-class MedianQueue extends ArrayDeque {
+class MedianQueue extends ArrayDeque<Integer> {
 
-    Queue queue;
+    private static final long serialVersionUID = 1;
+    private final PriorityQueue<Integer> left;
+    private final PriorityQueue<Integer> right;
 
     MedianQueue() {
-        queue = new ArrayDeque();
+        left = new PriorityQueue<>(Collections.reverseOrder());
+        right = new PriorityQueue<>();
     }
 
     @Override
-    public boolean add(Object o) {
-        return false;
+    public boolean offer(Integer integer) {
+        if (right.size() > 0 && integer > right.peek()) {
+            right.offer(integer);
+            if (right.size() > left.size() + 1) {
+                left.offer(right.poll());
+            }
+        } else {
+            left.offer(integer);
+            if (left.size() > right.size() + 1) {
+                right.offer(left.poll());
+            }
+        }
+        return true;
     }
 
     @Override
-    public boolean offer(Object o) {
-        return false;
+    public int size() {
+        return left.size() + right.size();
     }
 
     @Override
-    public Object remove() {
-        return null;
+    public Integer poll() {
+        Integer pollElement;
+        if (left.size() < right.size()) {
+            pollElement = right.poll();
+        } else {
+            pollElement = left.poll();
+        }
+        return pollElement;
     }
 
-    @Override
-    public Object poll() {
-        return null;
-    }
-
-    @Override
-    public Object element() {
-        return null;
-    }
-
-    @Override
-    public Object peek() {
-        return null;
+    public Integer peek() {
+        Integer peekElement;
+        if (left.size() < right.size()) {
+            peekElement = right.peek();
+        } else {
+            peekElement = left.peek();
+        }
+        return peekElement;
     }
 }
