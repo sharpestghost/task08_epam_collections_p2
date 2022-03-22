@@ -12,12 +12,6 @@ public class PairStringList extends ArrayList<String> {
     }
 
     @Override
-    public int size() {
-        return super.size();
-    }
-
-
-    @Override
     public boolean add(String s) {
         super.add(s);
         return super.add(s);
@@ -32,7 +26,7 @@ public class PairStringList extends ArrayList<String> {
 
     @Override
     public String remove(int index) {
-        super.remove(index);
+        super.remove(getLowerEvenIndex(index));
         return super.remove(getLowerEvenIndex(index));
     }
 
@@ -52,18 +46,12 @@ public class PairStringList extends ArrayList<String> {
         return super.addAll(getHigherEvenIndex(index), duplicateCollection(c));
     }
 
-    @Override
-    public String get(int index) {
-        return super.get(index);
-    }
 
     @Override
     public String set(int index, String element) {
         super.set(index, element);
         return super.set(getAdjacentIndex(index), element);
     }
-
-
 
     //Perhaps there is a better solution here
     private List<String> duplicateCollection(Collection<? extends String> c) {
@@ -76,11 +64,11 @@ public class PairStringList extends ArrayList<String> {
     }
 
     private int getLowerEvenIndex(int index) {
-        return (index ^ 1) - 1;
+        return (index | 1) - 1;
     }
 
     private int getHigherEvenIndex(int index) {
-        return (index ^ 1) + 1;
+        return ((index + 1) | 1) - 1;
     }
     private int getAdjacentIndex(int index) {
         return index ^ 1;
