@@ -7,6 +7,7 @@ import java.util.List;
 public class PairStringList extends ArrayList<String> {
 
     private static final long serialVersionUID = 1;
+    private static final int DIVISIER_OF_EVEN = 2;
 
     PairStringList() {
     }
@@ -64,13 +65,24 @@ public class PairStringList extends ArrayList<String> {
     }
 
     private int getLowerEvenIndex(int index) {
-        return (index | 1) - 1;
+        if (index % DIVISIER_OF_EVEN != 0) {
+            index--;
+        }
+        return index;
     }
 
     private int getHigherEvenIndex(int index) {
-        return ((index + 1) | 1) - 1;
+        if (index % DIVISIER_OF_EVEN != 0) {
+            index++;
+        }
+        return index;
     }
     private int getAdjacentIndex(int index) {
-        return index ^ 1;
+        if (index % DIVISIER_OF_EVEN != 0) {
+            index--;
+        } else {
+            index++;
+        }
+        return index;
     }
 }
