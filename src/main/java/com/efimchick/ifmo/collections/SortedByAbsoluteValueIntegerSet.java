@@ -17,7 +17,7 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
         set = new LinkedHashSet<>();
     }
 
-    public Set<> getSet() {
+    public Set<Integer> getSet() {
         return set;
     }
 
@@ -64,7 +64,7 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
         };
     }
 
-    Override
+    @Override
     public int hashCode() {
         return Objects.hash(getSet());
     }
