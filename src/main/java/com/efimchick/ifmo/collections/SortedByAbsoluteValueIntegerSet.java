@@ -18,7 +18,7 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
     }
 
     public Set<Integer> getSet() {
-        return set;
+        return new LinkedHashSet<>(set);
     }
 
     @Override
@@ -43,23 +43,24 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
 
     @Override
     public Iterator<Integer> iterator() {
-        
         return new Iterator<>() {
             private final List<Integer> setOfElements = set.stream().
                     sorted(Comparator.comparingInt(Math::abs)).collect(Collectors.toList());
             private int index;
 
             @Override
-            public boolean hasNext() {
-                return index <= setOfElements.size();
-            }
-
-            @Override
             public Integer next() {
-                if (!hasNext()) {
+                Integer nextElement = setOfElements.get(index);
+                if (hasNext()) {
+                    index++;
+                    return nextElement;
+                } else {
                     throw new NoSuchElementException();
                 }
-                return setOfElements.get(index++);
+            }
+            @Override
+            public boolean hasNext() {
+                return index < setOfElements.size();
             }
         };
     }
@@ -73,11 +74,11 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
     public boolean equals(Object o) {
         if (o == this) {
             return true;
-        } if (!(o instanceof SortedByAbsoluteValueIntegerSet)) {
+        }
+        if (!(o instanceof SortedByAbsoluteValueIntegerSet)) {
             return false;
         }
         SortedByAbsoluteValueIntegerSet otherSet = (SortedByAbsoluteValueIntegerSet) o;
         return this.getSet().equals(otherSet.getSet());
-}
-
+    }
 }
