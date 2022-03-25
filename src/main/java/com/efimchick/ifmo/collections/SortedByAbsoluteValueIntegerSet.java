@@ -66,7 +66,7 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSet());
+        return getSet().hashCode();
     }
 
     @Override
