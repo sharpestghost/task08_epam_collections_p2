@@ -47,7 +47,6 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
 
             @Override
             public boolean hasNext() {
-                index++;
                 return index <= setOfElements.size();
             }
 
@@ -56,7 +55,7 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return setOfElements.get(index - 1);
+                return setOfElements.get(index++);
             }
         };
     }
