@@ -17,6 +17,10 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
         set = new LinkedHashSet<>();
     }
 
+    public Set<> getSet() {
+        return set;
+    }
+
     @Override
     public int size() {
         return set.size();
@@ -59,5 +63,21 @@ public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer
             }
         };
     }
+
+    Override
+    public int hashCode() {
+        return Objects.hash(getSet());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        } if (!(o instanceof SortedByAbsoluteValueIntegerSet)) {
+            return false;
+        }
+        SortedByAbsoluteValueIntegerSet otherSet = (SortedByAbsoluteValueIntegerSet) o;
+        return this.getSet().equals(otherSet.getSet());
+}
 
 }
