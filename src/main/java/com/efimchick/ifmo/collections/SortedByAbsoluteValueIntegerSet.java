@@ -4,10 +4,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer>  {
+public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer>  {
 
     private static final long serialVersionUID = 1;
     private final Set<Integer> set;
@@ -38,8 +39,8 @@ class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer>  {
 
     @Override
     public Iterator<Integer> iterator() {
+        
         return new Iterator<>() {
-
             private final List<Integer> setOfElements = set.stream().
                     sorted(Comparator.comparingInt(Math::abs)).collect(Collectors.toList());
             private int index;
@@ -52,9 +53,11 @@ class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer>  {
 
             @Override
             public Integer next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 return setOfElements.get(index - 1);
             }
-
         };
     }
 
