@@ -1,84 +1,55 @@
 package com.efimchick.ifmo.collections;
 
+import java.util.AbstractSet;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-public final class SortedByAbsoluteValueIntegerSet extends LinkedHashSet<Integer>  {
+public final class SortedByAbsoluteValueIntegerSet extends AbstractSet<Integer>  {
 
-    private static final long serialVersionUID = 1;
-    private final Set<Integer> set;
-    
-    SortedByAbsoluteValueIntegerSet() {
-        set = new LinkedHashSet<>();
+    private final TreeSet<Integer> sortedByAbsValueSet;
+
+    public SortedByAbsoluteValueIntegerSet() {
+        sortedByAbsValueSet = new TreeSet<>(Comparator.comparingInt(Math::abs)
+        );
     }
 
     public Set<Integer> getSet() {
-        return new LinkedHashSet<>(set);
+        return new TreeSet<>(sortedByAbsValueSet);
+    }
+
+    @Override
+    public boolean add(Integer element) {
+        sortedByAbsValueSet.add(element);
+        return true;
     }
 
     @Override
     public int size() {
-        return set.size();
+        return sortedByAbsValueSet.size();
     }
 
-    @Override
-    public boolean add(Integer integer) {
-        return set.add(integer);
-    }
 
-    @Override
-    public boolean remove(Object o) {
-        return set.remove(o);
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        return set.contains(o);
-    }
-
-    @Override
     public Iterator<Integer> iterator() {
-        return new Iterator<>() {
-            private final List<Integer> setOfElements = set.stream().
-                    sorted(Comparator.comparingInt(Math::abs)).collect(Collectors.toList());
-            private int index;
-
-            @Override
-            public Integer next() {
-                Integer nextElement = setOfElements.get(index);
-                if (hasNext()) {
-                    index++;
-                    return nextElement;
-                } else {
-                    throw new NoSuchElementException();
-                }
-            }
-            @Override
-            public boolean hasNext() {
-                return index < setOfElements.size();
-            }
-        };
+        return sortedByAbsValueSet.iterator();
     }
 
     @Override
     public int hashCode() {
-        return getSet().hashCode();
+        return sortedByAbsValueSet.hashCode();
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == this) {
+    public boolean equals(Object obj) {
+        if (obj == this) {
             return true;
         }
-        if (!(o instanceof SortedByAbsoluteValueIntegerSet)) {
+        if (!(obj instanceof SortedByAbsoluteValueIntegerSet)) {
             return false;
         }
-        SortedByAbsoluteValueIntegerSet otherSet = (SortedByAbsoluteValueIntegerSet) o;
+        SortedByAbsoluteValueIntegerSet otherSet = (SortedByAbsoluteValueIntegerSet) obj;
         return this.getSet().equals(otherSet.getSet());
     }
 }
