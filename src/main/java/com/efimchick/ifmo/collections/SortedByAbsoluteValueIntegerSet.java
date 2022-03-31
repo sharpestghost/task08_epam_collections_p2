@@ -5,15 +5,14 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public final class SortedByAbsoluteValueIntegerSet extends AbstractSet<Integer>  {
 
     private final TreeSet<Integer> sortedByAbsValueSet;
 
     public SortedByAbsoluteValueIntegerSet() {
-        sortedByAbsValueSet = new TreeSet<>(Comparator.comparingInt(Math::abs)
-        );
+        sortedByAbsValueSet = new TreeSet<>(Comparator.
+                comparingInt((Integer s) -> Math.abs(s)).thenComparingInt(s -> s));
     }
 
     public Set<Integer> getSet() {
